@@ -491,6 +491,7 @@ set(LLVM_ALL_TARGETS
   WebAssembly
   X86
   XCore
+  Cpu0
   )
 
 set(LLVM_ALL_EXPERIMENTAL_TARGETS
