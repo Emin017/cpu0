@@ -1659,6 +1659,8 @@ unsigned Triple::getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
   case llvm::Triple::x86:
   case llvm::Triple::xcore:
   case llvm::Triple::xtensa:
+  case llvm::Triple::cpu0:
+  case llvm::Triple::cpu0el:
     return 32;
 
   case llvm::Triple::aarch64:
@@ -1802,6 +1804,8 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::tcele:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::cpu0:
+  case Triple::cpu0el:
     T.setArch(UnknownArch);
     break;
 

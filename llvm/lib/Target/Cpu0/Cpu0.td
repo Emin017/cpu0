@@ -29,6 +29,9 @@ include "Cpu0Schedule.td"
 // Instruction Description
 include "Cpu0InstrInfo.td"
 
+// Calling Convention
+include "Cpu0CallingConv.td"
+
 //===----------------------------------------------------------------------===//
 // Cpu0 SUbtarget features
 //===----------------------------------------------------------------------===//
