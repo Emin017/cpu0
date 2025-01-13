@@ -15,12 +15,12 @@
 #include "Cpu0.h"
 #include "Cpu0TargetObjectFile.h"
 
+#include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
 #include "llvm/CodeGen/Passes.h"
 #include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/MC/TargetRegistry.h"
 #include "llvm/Support/CodeGen.h"
-#include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
 
 using namespace llvm;
 
@@ -52,7 +52,8 @@ static std::string computeDataLayout(const Triple &TT, StringRef CPU,
   // align them to 32 bits. 64 bits integers have natural alignment.
   Ret += "-i8:8:32-i16:16:32-i64:64";
 
-  // 32 bits registers are always available and the stack is at least 64 bits aligned
+  // 32 bits registers are always available and the stack is at least 64 bits
+  // aligned
   Ret += "-n32-s64";
 
   return Ret;
@@ -77,18 +78,19 @@ Cpu0TargetMachine::Cpu0TargetMachine(const Target &T, const Triple &TT,
                                      std::optional<CodeModel::Model> CM,
                                      CodeGenOptLevel OL, bool JIT,
                                      bool isLittle)
-    : CodeGenTargetMachineImpl(T, computeDataLayout(TT, CPU, Options, isLittle), TT,
-                        CPU, FS, Options, getEffectiveRelocModel(JIT, RM),
-                        getEffectiveCodeModel(CM, CodeModel::Small), OL),
+    : CodeGenTargetMachineImpl(T, computeDataLayout(TT, CPU, Options, isLittle),
+                               TT, CPU, FS, Options,
+                               getEffectiveRelocModel(JIT, RM),
+                               getEffectiveCodeModel(CM, CodeModel::Small), OL),
       isLittle(isLittle), TLOF(std::make_unique<Cpu0TargetObjectFile>()),
       ABI(Cpu0ABIInfo::computeTargetABI()),
       DefaultSubtarget(TT, CPU, FS, isLittle, *this) {
   initAsmInfo();
 }
 
-Cpu0TargetMachine::~Cpu0TargetMachine() { }
+Cpu0TargetMachine::~Cpu0TargetMachine() {}
 
-void Cpu0ebTargetMachine::anchor() { }
+void Cpu0ebTargetMachine::anchor() {}
 
 Cpu0ebTargetMachine::Cpu0ebTargetMachine(const Target &T, const Triple &TT,
                                          StringRef CPU, StringRef FS,
@@ -96,9 +98,9 @@ Cpu0ebTargetMachine::Cpu0ebTargetMachine(const Target &T, const Triple &TT,
                                          std::optional<Reloc::Model> RM,
                                          std::optional<CodeModel::Model> CM,
                                          CodeGenOptLevel OL, bool JIT)
-    : Cpu0TargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, false) { }
+    : Cpu0TargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, false) {}
 
-void Cpu0elTargetMachine::anchor() { }
+void Cpu0elTargetMachine::anchor() {}
 
 Cpu0elTargetMachine::Cpu0elTargetMachine(const Target &T, const Triple &TT,
                                          StringRef CPU, StringRef FS,
@@ -106,7 +108,7 @@ Cpu0elTargetMachine::Cpu0elTargetMachine(const Target &T, const Triple &TT,
                                          std::optional<Reloc::Model> RM,
                                          std::optional<CodeModel::Model> CM,
                                          CodeGenOptLevel OL, bool JIT)
-    : Cpu0TargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, true) { }
+    : Cpu0TargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, true) {}
 
 const Cpu0Subtarget *
 Cpu0TargetMachine::getSubtargetImpl(const Function &F) const {
@@ -126,8 +128,7 @@ Cpu0TargetMachine::getSubtargetImpl(const Function &F) const {
     // creation will depend on the TM and the code generation flags on the
     // function that reside in TargetOptions.
     resetTargetOptions(F);
-    I = std::make_unique<Cpu0Subtarget>(TargetTriple, CPU, FS, isLittle,
-                                         *this);
+    I = std::make_unique<Cpu0Subtarget>(TargetTriple, CPU, FS, isLittle, *this);
   }
   return I.get();
 }
@@ -137,7 +138,7 @@ namespace {
 class Cpu0PassConfig : public TargetPassConfig {
 public:
   Cpu0PassConfig(Cpu0TargetMachine &TM, PassManagerBase &PM)
-    : TargetPassConfig(TM, PM) { }
+      : TargetPassConfig(TM, PM) {}
 
   Cpu0TargetMachine &getCpu0TargetMachine() const {
     return getTM<Cpu0TargetMachine>();

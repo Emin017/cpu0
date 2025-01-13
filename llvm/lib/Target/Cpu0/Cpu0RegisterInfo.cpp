@@ -14,8 +14,8 @@
 #include "Cpu0RegisterInfo.h"
 
 #include "Cpu0.h"
-#include "Cpu0Subtarget.h"
 #include "Cpu0MachineFunctionInfo.h"
+#include "Cpu0Subtarget.h"
 #include "llvm/CodeGen/Register.h"
 #include "llvm/IR/Function.h"
 #include "llvm/IR/Type.h"
@@ -32,7 +32,7 @@
 using namespace llvm;
 
 Cpu0RegisterInfo::Cpu0RegisterInfo(const Cpu0Subtarget &ST)
-  : Cpu0GenRegisterInfo(Cpu0::LR), Subtarget(ST) {}
+    : Cpu0GenRegisterInfo(Cpu0::LR), Subtarget(ST) {}
 
 //===----------------------------------------------------------------------===//
 // Callee Saved Registers methods
@@ -50,11 +50,9 @@ Cpu0RegisterInfo::getCallPreservedMask(const MachineFunction &MF,
   return CSR_032_RegMask;
 }
 
-BitVector Cpu0RegisterInfo::
-getReservedRegs(const MachineFunction &MF) const {
-  static const uint16_t ReservedCPURegs[] = {
-    Cpu0::ZERO, Cpu0::AT, Cpu0::SP, Cpu0::LR, Cpu0::PC
-  };
+BitVector Cpu0RegisterInfo::getReservedRegs(const MachineFunction &MF) const {
+  static const uint16_t ReservedCPURegs[] = {Cpu0::ZERO, Cpu0::AT, Cpu0::SP,
+                                             Cpu0::LR, Cpu0::PC};
   BitVector Reserved(getNumRegs());
 
   for (unsigned I = 0; I < std::size(ReservedCPURegs); ++I)
@@ -67,25 +65,23 @@ getReservedRegs(const MachineFunction &MF) const {
 // FrameIndex represent objects inside a abstract stack.
 // We must replace FrameIndex with an stack/frame pointer
 // direct reference.
-bool Cpu0RegisterInfo::
-eliminateFrameIndex(MachineBasicBlock::iterator II, int SPAdj,
-                    unsigned FIOperandNum, RegScavenger *RS) const {
+bool Cpu0RegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
+                                           int SPAdj, unsigned FIOperandNum,
+                                           RegScavenger *RS) const {
   return true;
 }
 
-bool
-Cpu0RegisterInfo::requiresRegisterScavenging(const MachineFunction &MF) const {
+bool Cpu0RegisterInfo::requiresRegisterScavenging(
+    const MachineFunction &MF) const {
   return true;
 }
 
-bool
-Cpu0RegisterInfo::trackLivenessAfterRegAlloc(const MachineFunction &MF) const {
+bool Cpu0RegisterInfo::trackLivenessAfterRegAlloc(
+    const MachineFunction &MF) const {
   return true;
 }
 
-Register Cpu0RegisterInfo::
-getFrameRegister(const MachineFunction &MF) const {
+Register Cpu0RegisterInfo::getFrameRegister(const MachineFunction &MF) const {
   const TargetFrameLowering *TFI = MF.getSubtarget().getFrameLowering();
-  return TFI->hasFP(MF) ? (Cpu0::FP) :
-                          (Cpu0::SP);
+  return TFI->hasFP(MF) ? (Cpu0::FP) : (Cpu0::SP);
 }

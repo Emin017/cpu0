@@ -18,9 +18,9 @@
 #include "Cpu0ISelLowering.h"
 #include "Cpu0InstrInfo.h"
 #include "llvm/CodeGen/SelectionDAGTargetInfo.h"
+#include "llvm/CodeGen/TargetSubtargetInfo.h"
 #include "llvm/IR/DataLayout.h"
 #include "llvm/MC/MCInstrItineraries.h"
-#include "llvm/CodeGen/TargetSubtargetInfo.h"
 #include <string>
 
 #define GET_SUBTARGETINFO_HEADER
@@ -35,10 +35,7 @@ class Cpu0Subtarget : public Cpu0GenSubtargetInfo {
   virtual void anchor();
 
 protected:
-  enum Cpu0ArchEnum {
-    Cpu032I,
-    Cpu032II
-  };
+  enum Cpu0ArchEnum { Cpu032I, Cpu032II };
 
   // Cpu0 architecture version
   // Controled by -mcpu in commandline
@@ -73,8 +70,8 @@ public:
 
   // This constructor initializes the data members to match that
   // of the specified triple.
-  Cpu0Subtarget(const Triple &TT, StringRef CPU, StringRef FS,
-                bool little, const Cpu0TargetMachine &_TM);
+  Cpu0Subtarget(const Triple &TT, StringRef CPU, StringRef FS, bool little,
+                const Cpu0TargetMachine &_TM);
 
   //- Vitual function, must have
   // ParseSubtargetFeatures - Parses features string setting specified
@@ -90,14 +87,12 @@ public:
   // Features related to the presence of specific instructions.
   bool enableOverflow() const { return EnableOverflow; }
   bool disableOverflow() const { return !EnableOverflow; }
-  bool hasCmp()   const { return HasCmp; }
-  bool hasSlt()   const { return HasSlt; }
+  bool hasCmp() const { return HasCmp; }
+  bool hasSlt() const { return HasSlt; }
 
   bool abiUsesSoftFloat() const;
 
-  bool enableLongBranchPass() const {
-    return hasCpu032II();
-  }
+  bool enableLongBranchPass() const { return hasCpu032II(); }
 
   unsigned stackAlignment() const { return 8; }
 
@@ -121,6 +116,6 @@ public:
     return &InstrItins;
   }
 };
-} // End llvm namespace
+} // namespace llvm
 
 #endif

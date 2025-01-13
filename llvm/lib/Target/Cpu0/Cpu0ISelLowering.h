@@ -15,8 +15,8 @@
 #ifndef LLVM_LIB_TARGET_CPU0_CPU0ISELLOWERING_H
 #define LLVM_LIB_TARGET_CPU0_CPU0ISELLOWERING_H
 
-#include "MCTargetDesc/Cpu0ABIInfo.h"
 #include "Cpu0.h"
+#include "MCTargetDesc/Cpu0ABIInfo.h"
 #include "llvm/CodeGen/CallingConvLower.h"
 #include "llvm/CodeGen/SelectionDAG.h"
 #include "llvm/CodeGen/TargetLowering.h"
@@ -63,7 +63,7 @@ enum NodeType {
 
   Sync
 };
-} // End CPU0ISD namespace
+} // namespace Cpu0ISD
 
 //===----------------------------------------------------------------------===//
 // TargetLowering Implementation
@@ -85,11 +85,11 @@ public:
 protected:
   // Byval argument information.
   struct ByValArgInfo {
-    unsigned FirstIdx;  // Index of the first register used.
-    unsigned NumRegs;   // Number of registers used for this argument.
-    unsigned Address;   // Offset of the stack area used to pass this argument.
+    unsigned FirstIdx; // Index of the first register used.
+    unsigned NumRegs;  // Number of registers used for this argument.
+    unsigned Address;  // Offset of the stack area used to pass this argument.
 
-    ByValArgInfo() : FirstIdx(0), NumRegs(0), Address(0) { }
+    ByValArgInfo() : FirstIdx(0), NumRegs(0), Address(0) {}
   };
 
   // Subtarget Info
@@ -101,24 +101,22 @@ private:
   // Lower Operand specifics
   SDValue LowerGlobalAddress(SDValue Op, SelectionDAG &DAG) const;
 
-  SDValue LowerFormalArguments(SDValue Chain,
-                               CallingConv::ID CallConv, bool IsVarArg,
+  SDValue LowerFormalArguments(SDValue Chain, CallingConv::ID CallConv,
+                               bool IsVarArg,
                                const SmallVectorImpl<ISD::InputArg> &Ins,
                                const SDLoc &dl, SelectionDAG &DAG,
                                SmallVectorImpl<SDValue> &InVals) const override;
 
-  SDValue LowerReturn(SDValue Chain,
-                      CallingConv::ID CallConv, bool IsVarArg,
+  SDValue LowerReturn(SDValue Chain, CallingConv::ID CallConv, bool IsVarArg,
                       const SmallVectorImpl<ISD::OutputArg> &Outs,
-                      const SmallVectorImpl<SDValue> &OutVals,
-                      const SDLoc &dl, SelectionDAG &DAG) const override;
+                      const SmallVectorImpl<SDValue> &OutVals, const SDLoc &dl,
+                      SelectionDAG &DAG) const override;
 };
 
 const Cpu0TargetLowering *
 createCpu0SETargetLowering(const Cpu0TargetMachine &TM,
                            const Cpu0Subtarget &STI);
 
-} // End llvm namespace
-
+} // namespace llvm
 
 #endif

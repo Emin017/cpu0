@@ -15,8 +15,8 @@
 #define LLVM_LIB_TARGET_CPU0_CPU0SEINSTRINFO_H
 
 #include "Cpu0InstrInfo.h"
-#include "Cpu0SERegisterInfo.h"
 #include "Cpu0MachineFunctionInfo.h"
+#include "Cpu0SERegisterInfo.h"
 
 namespace llvm {
 
@@ -27,8 +27,7 @@ public:
   explicit Cpu0SEInstrInfo(const Cpu0Subtarget &STI);
 
   const Cpu0RegisterInfo &getRegisterInfo() const override;
-
 };
-} // End llvm namespace
+} // namespace llvm
 
 #endif

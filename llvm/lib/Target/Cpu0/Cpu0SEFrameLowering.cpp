@@ -13,10 +13,10 @@
 
 #include "Cpu0SEFrameLowering.h"
 
+#include "Cpu0FrameLowering.h"
 #include "Cpu0MachineFunctionInfo.h"
 #include "Cpu0SEInstrInfo.h"
 #include "Cpu0Subtarget.h"
-#include "Cpu0FrameLowering.h"
 #include "llvm/CodeGen/MachineFrameInfo.h"
 #include "llvm/CodeGen/MachineFunction.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
@@ -31,7 +31,7 @@
 using namespace llvm;
 
 Cpu0SEFrameLowering::Cpu0SEFrameLowering(const Cpu0Subtarget &STI)
-  : Cpu0FrameLowering(STI, STI.stackAlignment()) { }
+    : Cpu0FrameLowering(STI, STI.stackAlignment()) {}
 
 void Cpu0SEFrameLowering::emitPrologue(MachineFunction &MF,
                                        MachineBasicBlock &MBB) const {
@@ -43,7 +43,7 @@ void Cpu0SEFrameLowering::emitEpilogue(MachineFunction &MF,
   /* Leave empty temporary */
 }
 
-const Cpu0FrameLowering *llvm::createCpu0SEFrameLowering(const Cpu0Subtarget
-                                                                   &ST) {
+const Cpu0FrameLowering *
+llvm::createCpu0SEFrameLowering(const Cpu0Subtarget &ST) {
   return new Cpu0SEFrameLowering(ST);
 }

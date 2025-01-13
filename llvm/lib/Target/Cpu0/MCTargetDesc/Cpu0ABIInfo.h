@@ -29,7 +29,7 @@ protected:
   ABI ThisABI;
 
 public:
-  Cpu0ABIInfo(ABI ThisABI) : ThisABI(ThisABI) { }
+  Cpu0ABIInfo(ABI ThisABI) : ThisABI(ThisABI) {}
 
   static Cpu0ABIInfo Unknown() { return Cpu0ABIInfo(ABI::Unknown); }
   static Cpu0ABIInfo O32() { return Cpu0ABIInfo(ABI::O32); }
@@ -64,6 +64,6 @@ public:
   unsigned GetEhDataReg(unsigned I) const;
   int EhDataRegSize() const;
 };
-} // End llvm namespace
+} // namespace llvm
 
 #endif

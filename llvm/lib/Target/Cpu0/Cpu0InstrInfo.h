@@ -26,8 +26,10 @@ namespace llvm {
 
 class Cpu0InstrInfo : public Cpu0GenInstrInfo {
   virtual void anchor();
+
 protected:
   const Cpu0Subtarget &Subtarget;
+
 public:
   explicit Cpu0InstrInfo(const Cpu0Subtarget &STI);
 
@@ -40,10 +42,9 @@ public:
 
   // Return the number of bytes of code the specified instruction maybe.
   unsigned GetInstSizeInBytes(const MachineInstr &MI) const;
-
 };
 
 const Cpu0InstrInfo *createCpu0SEInstrInfo(const Cpu0Subtarget &STI);
-}
+} // namespace llvm
 
 #endif

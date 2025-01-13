@@ -19,27 +19,32 @@
 #include <map>
 
 namespace llvm {
-  // This class is derived from MachienFunction private Cpu0 target-specific
-  // information for each MachineFunction.
-  class Cpu0MachineFunctionInfo : public MachineFunctionInfo {
-  public:
-    Cpu0MachineFunctionInfo(MachineFunction &MF)
-        : MF(MF), VarArgsFrameIndex(0), MaxCallFrameSize(0) { }
+// This class is derived from MachienFunction private Cpu0 target-specific
+// information for each MachineFunction.
+class Cpu0MachineFunctionInfo : public MachineFunctionInfo {
+public:
+  Cpu0MachineFunctionInfo(MachineFunction &MF)
+      : MF(MF), VarArgsFrameIndex(0), MaxCallFrameSize(0), EmitNOAT(false) {}
 
-    ~Cpu0MachineFunctionInfo();
+  ~Cpu0MachineFunctionInfo();
 
-    int getVarArgsFrameIndex() const { return VarArgsFrameIndex; }
-    void setVarArgsFrameIndex(int Index) { VarArgsFrameIndex = Index; }
+  int getVarArgsFrameIndex() const { return VarArgsFrameIndex; }
+  void setVarArgsFrameIndex(int Index) { VarArgsFrameIndex = Index; }
 
-  private:
-    virtual void anchor();
+  bool getEmitNOAT() const { return EmitNOAT; }
+  void setEmitNOAT() { EmitNOAT = true; }
 
-    MachineFunction &MF;
+private:
+  virtual void anchor();
 
-    // Frame index for start of varargs area
-    int VarArgsFrameIndex;
+  MachineFunction &MF;
 
-    unsigned MaxCallFrameSize;
-  };
-} // End llvm namespace
+  // Frame index for start of varargs area
+  int VarArgsFrameIndex;
+
+  unsigned MaxCallFrameSize;
+
+  bool EmitNOAT;
+};
+} // namespace llvm
 #endif

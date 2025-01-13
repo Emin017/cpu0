@@ -13,12 +13,12 @@
 
 #include "Cpu0InstrInfo.h"
 
-#include "Cpu0TargetMachine.h"
 #include "Cpu0MachineFunctionInfo.h"
+#include "Cpu0TargetMachine.h"
 #include "llvm/ADT/STLExtras.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
-#include "llvm/Support/ErrorHandling.h"
 #include "llvm/MC/TargetRegistry.h"
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace llvm;
 
@@ -26,10 +26,9 @@ using namespace llvm;
 #include "Cpu0GenInstrInfo.inc"
 
 // Pin the vtable to this file
-void Cpu0InstrInfo::anchor() { }
+void Cpu0InstrInfo::anchor() {}
 
-Cpu0InstrInfo::Cpu0InstrInfo(const Cpu0Subtarget &STI)
-  : Subtarget(STI) { }
+Cpu0InstrInfo::Cpu0InstrInfo(const Cpu0Subtarget &STI) : Subtarget(STI) {}
 
 const Cpu0InstrInfo *Cpu0InstrInfo::create(Cpu0Subtarget &STI) {
   return llvm::createCpu0SEInstrInfo(STI);
@@ -37,7 +36,7 @@ const Cpu0InstrInfo *Cpu0InstrInfo::create(Cpu0Subtarget &STI) {
 
 unsigned Cpu0InstrInfo::GetInstSizeInBytes(const MachineInstr &MI) const {
   switch (MI.getOpcode()) {
-    default:
-      return MI.getDesc().getSize();
+  default:
+    return MI.getDesc().getSize();
   }
 }

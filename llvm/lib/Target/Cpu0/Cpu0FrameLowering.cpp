@@ -29,7 +29,7 @@
 using namespace llvm;
 
 const Cpu0FrameLowering *Cpu0FrameLowering::create(const Cpu0Subtarget &ST) {
-    return llvm::createCpu0SEFrameLowering(ST);
+  return llvm::createCpu0SEFrameLowering(ST);
 }
 
 // Reture true if the specified function should have a dedicated frame pointer

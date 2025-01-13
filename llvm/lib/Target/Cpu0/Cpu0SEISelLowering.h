@@ -22,6 +22,6 @@ public:
   SDValue LowerOperation(SDValue Op, SelectionDAG &DAG) const override;
 };
 
-}// End llvm namespace
+} // namespace llvm
 
 #endif
