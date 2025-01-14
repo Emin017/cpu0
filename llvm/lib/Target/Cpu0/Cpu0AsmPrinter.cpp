@@ -48,10 +48,10 @@ bool Cpu0AsmPrinter::runOnMachineFunction(MachineFunction &MF) {
   return true;
 }
 
-//@EmitInstruction {
-//- EmitInstruction() must exists or will have run time error.
+//@emitInstruction {
+//- emitInstruction() must exists or will have run time error.
 void Cpu0AsmPrinter::emitInstruction(const MachineInstr *MI) {
-  //@EmitInstruction body {
+  //@emitInstruction body {
   if (MI->isDebugValue()) {
     SmallString<128> Str;
     raw_svector_ostream OS(Str);
@@ -68,14 +68,14 @@ void Cpu0AsmPrinter::emitInstruction(const MachineInstr *MI) {
   do {
 
     if (I->isPseudo())
-      llvm_unreachable("Pseudo opcode found in EmitInstruction()");
+      llvm_unreachable("Pseudo opcode found in emitInstruction()");
 
     MCInst TmpInst0;
     MCInstLowering.Lower(&*I, TmpInst0);
     OutStreamer->emitInstruction(TmpInst0, getSubtargetInfo());
   } while ((++I != E) && I->isInsideBundle()); // Delay slot check
 }
-//@EmitInstruction }
+//@emitInstruction }
 
 //===----------------------------------------------------------------------===//
 //
@@ -200,7 +200,7 @@ void Cpu0AsmPrinter::emitFunctionEntryLabel() {
 //  .mask   0x00000000,0
 //->  .set  noreorder
 //@-> .set  nomacro
-/// EmitFunctionBodyStart - Targets can override this to emit stuff before
+/// emitFunctionBodyStart - Targets can override this to emit stuff before
 /// the first basic block in the function.
 void Cpu0AsmPrinter::emitFunctionBodyStart() {
   MCInstLowering.Initialize(&MF->getContext());
@@ -222,7 +222,7 @@ void Cpu0AsmPrinter::emitFunctionBodyStart() {
 //->	.set	macro
 //->	.set	reorder
 //->	.end	main
-/// EmitFunctionBodyEnd - Targets can override this to emit stuff after
+/// emitFunctionBodyEnd - Targets can override this to emit stuff after
 /// the last basic block in the function.
 void Cpu0AsmPrinter::emitFunctionBodyEnd() {
   // There are instruction for this macros, but they must
